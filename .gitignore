@@ -1,7 +1,9 @@
 # Astro
 node_modules/
-dist/
 .astro/
+
+# Nota: dist/ SÍ se versiona a propósito, porque Cloudflare
+# sirve esa carpeta como assets estáticos (ver wrangler.jsonc).
 
 # Sistema
 .DS_Store

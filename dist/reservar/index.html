@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Reservar — Café Aurora</title><style>:root{--bg:#e6f2e0;--ink:#2b2420;--accent:#c4763a;--accent-dark:#9c5a28;--muted:#7a6f66;--card:#fff;--badge-bg:#f3e4d6;--border:#ece2d6;--shadow:#0000000d;--green:#639922}html[data-theme=dark]{--bg:#16231a;--ink:#f5efe8;--accent:#e08c4d;--accent-dark:#c4763a;--muted:#a89b8d;--card:#25201b;--badge-bg:#3a2f25;--border:#3a322a;--shadow:#00000059;--green:#97c459}*{box-sizing:border-box;margin:0;padding:0}body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;line-height:1.6;transition:background .3s,color .3s}.wrap{max-width:900px;margin:0 auto;padding:0 24px}.nav{justify-content:space-between;align-items:center;padding:28px 0;display:flex}.nav a.brand{color:var(--ink);font-size:20px;font-weight:700;text-decoration:none}.nav a.brand span{color:var(--accent)}.nav .links{align-items:center;gap:22px;display:flex}.nav .links a{color:var(--muted);font-size:15px;font-weight:500;text-decoration:none;transition:color .2s}.nav .links a:hover,.nav .links a.active{color:var(--accent)}.theme-toggle{border:1px solid var(--border);background:var(--card);width:40px;height:40px;color:var(--ink);cursor:pointer;box-shadow:0 2px 10px var(--shadow);border-radius:50%;justify-content:center;align-items:center;font-size:18px;transition:background .3s,transform .2s;display:flex}.theme-toggle:hover{transform:scale(1.1)}header{text-align:center;padding:50px 0 40px}.badge{letter-spacing:2px;text-transform:uppercase;color:var(--accent-dark);background:var(--badge-bg);border-radius:100px;margin-bottom:22px;padding:6px 16px;font-size:13px;font-weight:600;display:inline-block}h1{letter-spacing:-1px;margin-bottom:18px;font-size:clamp(36px,7vw,60px);line-height:1.05}h1 span{color:var(--accent)}.sub{color:var(--muted);max-width:540px;margin:0 auto;font-size:19px}footer{text-align:center;color:var(--muted);border-top:1px solid var(--border);padding:40px 0 60px;font-size:14px}
+.layout{grid-template-columns:1fr 1fr;align-items:start;gap:24px;padding:20px 0 70px;display:grid}@media (width<=720px){.layout{grid-template-columns:1fr}}.panel{background:var(--card);box-shadow:0 4px 24px var(--shadow);border-radius:20px;padding:26px}.panel h2{margin-bottom:16px;font-size:18px}.cal-head{justify-content:space-between;align-items:center;margin-bottom:14px;display:flex}.cal-head .month{text-transform:capitalize;font-size:16px;font-weight:600}.cal-nav{border:1px solid var(--border);width:32px;height:32px;color:var(--ink);cursor:pointer;background:0 0;border-radius:50%;justify-content:center;align-items:center;font-size:16px;transition:background .2s;display:flex}.cal-nav:hover{background:var(--badge-bg)}.cal-grid{grid-template-columns:repeat(7,1fr);gap:4px;display:grid}.cal-grid .dow{text-align:center;color:var(--muted);text-transform:uppercase;padding-bottom:6px;font-size:12px;font-weight:600}.cal-day{aspect-ratio:1;color:var(--ink);cursor:pointer;background:0 0;border:none;border-radius:10px;justify-content:center;align-items:center;font-size:14px;transition:background .15s,color .15s;display:flex}.cal-day:hover:not(:disabled){background:var(--badge-bg)}.cal-day.empty{cursor:default}.cal-day:disabled{color:var(--border);cursor:not-allowed}.cal-day.selected{background:var(--accent);color:#fff;font-weight:600}.slots{grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px;display:grid}.slot{border:1px solid var(--border);color:var(--ink);cursor:pointer;background:0 0;border-radius:10px;padding:9px 0;font-size:14px;transition:background .15s,border-color .15s}.slot:hover{border-color:var(--accent)}.slot.selected{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}.hint{color:var(--muted);margin-top:14px;font-size:13px}.field{margin-bottom:16px}.field label{margin-bottom:6px;font-size:14px;font-weight:600;display:block}.field input,.field select,.field textarea{border:1px solid var(--border);background:var(--bg);width:100%;color:var(--ink);border-radius:12px;padding:11px 14px;font-family:inherit;font-size:15px}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);outline:none}.field textarea{resize:vertical;min-height:70px}#reserva .btn{background:var(--accent);color:#fff;cursor:pointer;border:none;border-radius:100px;width:100%;padding:14px;font-size:16px;font-weight:600;transition:background .2s,transform .2s}#reserva .btn:hover{background:var(--accent-dark);transform:translateY(-1px)}.summary{color:var(--muted);background:var(--bg);border:1px dashed var(--border);border-radius:12px;margin-bottom:16px;padding:12px 14px;font-size:14px}.summary b{color:var(--ink)}.ok{text-align:center;padding:30px 20px;display:none}.ok.show{display:block}.ok .check{background:var(--green);color:#fff;border-radius:50%;justify-content:center;align-items:center;width:60px;height:60px;margin:0 auto 16px;font-size:30px;display:flex}.ok h2{margin-bottom:8px;font-size:22px}.ok p{color:var(--muted)}
+</style></head><body><div class="wrap"><nav class="nav"><a href="/" class="brand">Café <span>Aurora</span></a><div class="links"><a href="/">Inicio</a><a href="/nosotros">Nosotros</a><a href="/reservar" class="active">Reservar</a><button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar modo claro/oscuro">🌙</button></div></nav><header><span class="badge">Reservas</span><h1>Reserva tu <span>mesa</span></h1><p class="sub">Elige el día y la hora que prefieras y déjanos tus datos. Te confirmamos en un momento.</p></header><form id="reserva" class="layout"><div class="panel"><div class="cal-head"><button type="button" class="cal-nav" id="prev" aria-label="Mes anterior">‹</button><span class="month" id="month"></span><button type="button" class="cal-nav" id="next" aria-label="Mes siguiente">›</button></div><div class="cal-grid" id="cal"></div><h2 style="margin-top:24px;">Hora</h2><div class="slots" id="slots"></div><p class="hint" id="slotHint">Primero elige un día.</p></div><div class="panel"><h2>Tus datos</h2><div class="summary" id="summary">Aún no has elegido día y hora.</div><div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required></div><div class="field"><label for="personas">Nº de personas</label><select id="personas" name="personas" required><option value="">Elige…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>Más de 8</option></select></div><div class="field"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required></div><div class="field"><label for="tel">Teléfono</label><input type="tel" id="tel" name="tel" placeholder="600 123 456"></div><div class="field"><label for="notas">Notas (opcional)</label><textarea id="notas" name="notas" placeholder="Alergias, trona para bebé, mesa junto a la ventana…"></textarea></div><button type="submit" class="btn">Confirmar reserva</button></div></form><div class="panel ok" id="ok" style="max-width:520px;margin:0 auto 70px;"><div class="check">✓</div><h2>¡Reserva enviada!</h2><p id="okText"></p></div><footer>Hecho como prueba con Claude · Café Aurora © 2026</footer></div><script>
+    const root = document.documentElement;
+    function applyTheme(t) {
+      const btn = document.querySelector('.theme-toggle');
+      if (t === 'dark') { root.setAttribute('data-theme', 'dark'); if (btn) btn.textContent = '☀️'; }
+      else { root.removeAttribute('data-theme'); if (btn) btn.textContent = '🌙'; }
+    }
+    function toggleTheme() {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      applyTheme(next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    }
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved) applyTheme(saved);
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) applyTheme('dark');
+  </script></body></html><script>
+  const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const DOW = ['L','M','X','J','V','S','D'];
+  const HORAS = ['13:00','13:30','14:00','14:30','19:00','19:30','20:00','20:30','21:00','21:30'];
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  let view = new Date(today.getFullYear(), today.getMonth(), 1);
+  let selectedDate = null;
+  let selectedTime = null;
+
+  const calEl = document.getElementById('cal');
+  const monthEl = document.getElementById('month');
+  const slotsEl = document.getElementById('slots');
+  const slotHint = document.getElementById('slotHint');
+  const summaryEl = document.getElementById('summary');
+
+  function renderCalendar() {
+    monthEl.textContent = MESES[view.getMonth()] + ' ' + view.getFullYear();
+    calEl.innerHTML = '';
+    DOW.forEach(d => {
+      const h = document.createElement('div'); h.className = 'dow'; h.textContent = d; calEl.appendChild(h);
+    });
+    const first = new Date(view.getFullYear(), view.getMonth(), 1);
+    let startDay = (first.getDay() + 6) % 7;
+    const daysInMonth = new Date(view.getFullYear(), view.getMonth()+1, 0).getDate();
+    for (let i=0; i<startDay; i++) {
+      const e = document.createElement('div'); e.className = 'cal-day empty'; calEl.appendChild(e);
+    }
+    for (let d=1; d<=daysInMonth; d++) {
+      const date = new Date(view.getFullYear(), view.getMonth(), d);
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'cal-day'; btn.textContent = d;
+      if (date < today) btn.disabled = true;
+      if (selectedDate && date.getTime() === selectedDate.getTime()) btn.classList.add('selected');
+      btn.addEventListener('click', () => {
+        selectedDate = date; selectedTime = null;
+        renderCalendar(); renderSlots(); updateSummary();
+      });
+      calEl.appendChild(btn);
+    }
+  }
+
+  function renderSlots() {
+    slotsEl.innerHTML = '';
+    if (!selectedDate) { slotHint.style.display='block'; return; }
+    slotHint.style.display='none';
+    HORAS.forEach(h => {
+      const b = document.createElement('button');
+      b.type='button'; b.className='slot'; b.textContent=h;
+      if (h === selectedTime) b.classList.add('selected');
+      b.addEventListener('click', () => { selectedTime = h; renderSlots(); updateSummary(); });
+      slotsEl.appendChild(b);
+    });
+  }
+
+  function fmtDate(d) {
+    return d.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+  }
+  function updateSummary() {
+    if (selectedDate && selectedTime)
+      summaryEl.innerHTML = 'Reservando para <b>' + fmtDate(selectedDate) + '</b> a las <b>' + selectedTime + '</b>.';
+    else if (selectedDate)
+      summaryEl.innerHTML = '<b>' + fmtDate(selectedDate) + '</b> — ahora elige una hora.';
+    else
+      summaryEl.textContent = 'Aún no has elegido día y hora.';
+  }
+
+  document.getElementById('prev').addEventListener('click', () => {
+    view = new Date(view.getFullYear(), view.getMonth()-1, 1); renderCalendar();
+  });
+  document.getElementById('next').addEventListener('click', () => {
+    view = new Date(view.getFullYear(), view.getMonth()+1, 1); renderCalendar();
+  });
+
+  const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/0hUps9Cw34s9hvvO8k0n/webhook-trigger/4962fa5e-1d22-4aee-a9bf-e458aa7f3218';
+
+  document.getElementById('reserva').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!selectedDate || !selectedTime) {
+      alert('Por favor, elige un día y una hora.');
+      return;
+    }
+
+    const nombre = document.getElementById('nombre').value;
+    const personas = document.getElementById('personas').value;
+
+    const payload = {
+      nombre: nombre,
+      email: document.getElementById('email').value,
+      telefono: document.getElementById('tel').value,
+      personas: personas,
+      fecha: selectedDate.toISOString().slice(0, 10),
+      fecha_texto: fmtDate(selectedDate),
+      hora: selectedTime,
+      notas: document.getElementById('notas').value,
+      origen: 'Web Café Aurora · reservas'
+    };
+
+    const submitBtn = document.querySelector('#reserva .btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error('Error al enviar la reserva:', err);
+    }
+
+    document.getElementById('reserva').style.display = 'none';
+    const ok = document.getElementById('ok');
+    document.getElementById('okText').innerHTML =
+      'Gracias, <b>' + nombre + '</b>. Hemos anotado tu reserva para <b>' + personas +
+      '</b> persona(s) el <b>' + fmtDate(selectedDate) + '</b> a las <b>' + selectedTime +
+      '</b>. Te enviaremos la confirmación por email.';
+    ok.classList.add('show');
+    ok.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  renderCalendar(); renderSlots();
+</script>
