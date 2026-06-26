@@ -353,15 +353,48 @@
       view = new Date(view.getFullYear(), view.getMonth()+1, 1); renderCalendar();
     });
 
-    /* ---------- Envío ---------- */
-    document.getElementById('reserva').addEventListener('submit', (e) => {
+    /* ---------- Envío al webhook ---------- */
+    const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/0hUps9Cw34s9hvvO8k0n/webhook-trigger/4962fa5e-1d22-4aee-a9bf-e458aa7f3218';
+
+    document.getElementById('reserva').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!selectedDate || !selectedTime) {
         alert('Por favor, elige un día y una hora.');
         return;
       }
+
       const nombre = document.getElementById('nombre').value;
       const personas = document.getElementById('personas').value;
+
+      // Datos que se envían al webhook
+      const payload = {
+        nombre: nombre,
+        email: document.getElementById('email').value,
+        telefono: document.getElementById('tel').value,
+        personas: personas,
+        fecha: selectedDate.toISOString().slice(0, 10), // AAAA-MM-DD
+        fecha_texto: fmtDate(selectedDate),
+        hora: selectedTime,
+        notas: document.getElementById('notas').value,
+        origen: 'Web Café Aurora · reservas'
+      };
+
+      const submitBtn = document.querySelector('#reserva .btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando…';
+
+      try {
+        await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {
+        // El webhook a veces no devuelve respuesta legible por CORS,
+        // pero la petición sí se entrega. Avisamos solo si falla la red.
+        console.error('Error al enviar la reserva:', err);
+      }
+
       document.getElementById('reserva').style.display = 'none';
       const ok = document.getElementById('ok');
       document.getElementById('okText').innerHTML =
