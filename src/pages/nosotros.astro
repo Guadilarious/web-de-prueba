@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Sobre nosotros — Café Aurora" active="nosotros">
+  <header>
+    <span class="badge">Sobre nosotros</span>
+    <h1>Una taza, <span>una historia</span></h1>
+    <p class="sub">Somos un café de barrio que empezó con una tostadora pequeña y muchas ganas de hacer las cosas bien.</p>
+  </header>
+
+  <section class="story">
+    <div class="photo">☕</div>
+    <div>
+      <h2>Cómo empezó todo</h2>
+      <p>Café Aurora nació en 2019 de una idea sencilla: que un buen café no debería ser un lujo, sino parte del día a día. Abrimos con una sola máquina, dos mesas y la promesa de tostar nuestros propios granos.</p>
+      <p>Hoy seguimos tostando en pequeñas tandas cada semana, eligiendo a mano cada origen y cuidando que cada taza salga como nos gustaría tomarla a nosotros.</p>
+    </div>
+  </section>
+
+  <section class="values">
+    <div class="card">
+      <span class="emoji">🌱</span>
+      <h3>Origen responsable</h3>
+      <p>Trabajamos directo con productores y pagamos precios justos por cada cosecha.</p>
+    </div>
+    <div class="card">
+      <span class="emoji">🔥</span>
+      <h3>Tostado propio</h3>
+      <p>Tostamos cada semana en tandas pequeñas para que el café llegue siempre fresco.</p>
+    </div>
+    <div class="card">
+      <span class="emoji">🤝</span>
+      <h3>Comunidad</h3>
+      <p>Más que un café, un punto de encuentro del barrio donde todos caben.</p>
+    </div>
+  </section>
+
+  <section class="hours">
+    <h2>Horario</h2>
+    <ul>
+      <li><span>Lunes – Viernes</span><span>7:30 – 20:00</span></li>
+      <li><span>Sábado</span><span>9:00 – 21:00</span></li>
+      <li><span>Domingo</span><span>9:00 – 15:00</span></li>
+    </ul>
+  </section>
+</Base>
+
+<style is:global>
+  .story {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: center;
+    padding: 30px 0 60px;
+  }
+  @media (max-width: 640px) { .story { grid-template-columns: 1fr; } }
+  .story .photo {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    border-radius: 20px;
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    box-shadow: 0 8px 30px var(--shadow);
+  }
+  .story h2 { font-size: 28px; margin-bottom: 14px; letter-spacing: -0.5px; }
+  .story p { color: var(--muted); margin-bottom: 14px; }
+
+  .values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    padding: 20px 0 70px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 24px var(--shadow);
+    transition: background 0.3s;
+  }
+  .card .emoji { font-size: 34px; display: block; margin-bottom: 12px; }
+  .card h3 { font-size: 19px; margin-bottom: 6px; }
+  .card p { color: var(--muted); font-size: 15px; }
+
+  .hours {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 36px;
+    box-shadow: 0 4px 24px var(--shadow);
+    margin-bottom: 70px;
+  }
+  .hours h2 { font-size: 24px; margin-bottom: 20px; text-align: center; }
+  .hours ul { list-style: none; max-width: 420px; margin: 0 auto; }
+  .hours li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .hours li:last-child { border-bottom: none; }
+  .hours li span:last-child { color: var(--muted); }
+</style>

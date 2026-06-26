@@ -1,0 +1,279 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Reservar — Café Aurora" active="reservar">
+  <header>
+    <span class="badge">Reservas</span>
+    <h1>Reserva tu <span>mesa</span></h1>
+    <p class="sub">Elige el día y la hora que prefieras y déjanos tus datos. Te confirmamos en un momento.</p>
+  </header>
+
+  <form id="reserva" class="layout">
+    <div class="panel">
+      <div class="cal-head">
+        <button type="button" class="cal-nav" id="prev" aria-label="Mes anterior">‹</button>
+        <span class="month" id="month"></span>
+        <button type="button" class="cal-nav" id="next" aria-label="Mes siguiente">›</button>
+      </div>
+      <div class="cal-grid" id="cal"></div>
+
+      <h2 style="margin-top:24px;">Hora</h2>
+      <div class="slots" id="slots"></div>
+      <p class="hint" id="slotHint">Primero elige un día.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Tus datos</h2>
+      <div class="summary" id="summary">Aún no has elegido día y hora.</div>
+
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+      </div>
+      <div class="field">
+        <label for="personas">Nº de personas</label>
+        <select id="personas" name="personas" required>
+          <option value="">Elige…</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option>
+          <option>Más de 8</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required />
+      </div>
+      <div class="field">
+        <label for="tel">Teléfono</label>
+        <input type="tel" id="tel" name="tel" placeholder="600 123 456" />
+      </div>
+      <div class="field">
+        <label for="notas">Notas (opcional)</label>
+        <textarea id="notas" name="notas" placeholder="Alergias, trona para bebé, mesa junto a la ventana…"></textarea>
+      </div>
+
+      <button type="submit" class="btn">Confirmar reserva</button>
+    </div>
+  </form>
+
+  <div class="panel ok" id="ok" style="max-width:520px;margin:0 auto 70px;">
+    <div class="check">✓</div>
+    <h2>¡Reserva enviada!</h2>
+    <p id="okText"></p>
+  </div>
+</Base>
+
+<style is:global>
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 20px 0 70px;
+    align-items: start;
+  }
+  @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 4px 24px var(--shadow);
+  }
+  .panel h2 { font-size: 18px; margin-bottom: 16px; }
+
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .cal-head .month { font-weight: 600; font-size: 16px; text-transform: capitalize; }
+  .cal-nav {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid var(--border); background: transparent; color: var(--ink);
+    cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .cal-nav:hover { background: var(--badge-bg); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-grid .dow {
+    text-align: center; font-size: 12px; color: var(--muted); font-weight: 600;
+    text-transform: uppercase; padding-bottom: 6px;
+  }
+  .cal-day {
+    aspect-ratio: 1; border: none; background: transparent; color: var(--ink);
+    border-radius: 10px; cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, color 0.15s;
+  }
+  .cal-day:hover:not(:disabled) { background: var(--badge-bg); }
+  .cal-day.empty { cursor: default; }
+  .cal-day:disabled { color: var(--border); cursor: not-allowed; }
+  .cal-day.selected { background: var(--accent); color: #fff; font-weight: 600; }
+
+  .slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 18px; }
+  .slot {
+    border: 1px solid var(--border); background: transparent; color: var(--ink);
+    padding: 9px 0; border-radius: 10px; cursor: pointer; font-size: 14px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .slot:hover { border-color: var(--accent); }
+  .slot.selected { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+  .hint { font-size: 13px; color: var(--muted); margin-top: 14px; }
+
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 11px 14px; border-radius: 12px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+    font-size: 15px; font-family: inherit;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--accent);
+  }
+  .field textarea { resize: vertical; min-height: 70px; }
+
+  #reserva .btn {
+    width: 100%; background: var(--accent); color: #fff; border: none;
+    padding: 14px; border-radius: 100px; font-weight: 600; font-size: 16px;
+    cursor: pointer; transition: background 0.2s, transform 0.2s;
+  }
+  #reserva .btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+  .summary {
+    font-size: 14px; color: var(--muted); margin-bottom: 16px;
+    padding: 12px 14px; background: var(--bg); border-radius: 12px;
+    border: 1px dashed var(--border);
+  }
+  .summary b { color: var(--ink); }
+
+  .ok { display: none; text-align: center; padding: 30px 20px; }
+  .ok.show { display: block; }
+  .ok .check {
+    width: 60px; height: 60px; border-radius: 50%; background: var(--green);
+    color: #fff; font-size: 30px; display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .ok h2 { font-size: 22px; margin-bottom: 8px; }
+  .ok p { color: var(--muted); }
+</style>
+
+<script is:inline>
+  const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const DOW = ['L','M','X','J','V','S','D'];
+  const HORAS = ['13:00','13:30','14:00','14:30','19:00','19:30','20:00','20:30','21:00','21:30'];
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  let view = new Date(today.getFullYear(), today.getMonth(), 1);
+  let selectedDate = null;
+  let selectedTime = null;
+
+  const calEl = document.getElementById('cal');
+  const monthEl = document.getElementById('month');
+  const slotsEl = document.getElementById('slots');
+  const slotHint = document.getElementById('slotHint');
+  const summaryEl = document.getElementById('summary');
+
+  function renderCalendar() {
+    monthEl.textContent = MESES[view.getMonth()] + ' ' + view.getFullYear();
+    calEl.innerHTML = '';
+    DOW.forEach(d => {
+      const h = document.createElement('div'); h.className = 'dow'; h.textContent = d; calEl.appendChild(h);
+    });
+    const first = new Date(view.getFullYear(), view.getMonth(), 1);
+    let startDay = (first.getDay() + 6) % 7;
+    const daysInMonth = new Date(view.getFullYear(), view.getMonth()+1, 0).getDate();
+    for (let i=0; i<startDay; i++) {
+      const e = document.createElement('div'); e.className = 'cal-day empty'; calEl.appendChild(e);
+    }
+    for (let d=1; d<=daysInMonth; d++) {
+      const date = new Date(view.getFullYear(), view.getMonth(), d);
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'cal-day'; btn.textContent = d;
+      if (date < today) btn.disabled = true;
+      if (selectedDate && date.getTime() === selectedDate.getTime()) btn.classList.add('selected');
+      btn.addEventListener('click', () => {
+        selectedDate = date; selectedTime = null;
+        renderCalendar(); renderSlots(); updateSummary();
+      });
+      calEl.appendChild(btn);
+    }
+  }
+
+  function renderSlots() {
+    slotsEl.innerHTML = '';
+    if (!selectedDate) { slotHint.style.display='block'; return; }
+    slotHint.style.display='none';
+    HORAS.forEach(h => {
+      const b = document.createElement('button');
+      b.type='button'; b.className='slot'; b.textContent=h;
+      if (h === selectedTime) b.classList.add('selected');
+      b.addEventListener('click', () => { selectedTime = h; renderSlots(); updateSummary(); });
+      slotsEl.appendChild(b);
+    });
+  }
+
+  function fmtDate(d) {
+    return d.toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+  }
+  function updateSummary() {
+    if (selectedDate && selectedTime)
+      summaryEl.innerHTML = 'Reservando para <b>' + fmtDate(selectedDate) + '</b> a las <b>' + selectedTime + '</b>.';
+    else if (selectedDate)
+      summaryEl.innerHTML = '<b>' + fmtDate(selectedDate) + '</b> — ahora elige una hora.';
+    else
+      summaryEl.textContent = 'Aún no has elegido día y hora.';
+  }
+
+  document.getElementById('prev').addEventListener('click', () => {
+    view = new Date(view.getFullYear(), view.getMonth()-1, 1); renderCalendar();
+  });
+  document.getElementById('next').addEventListener('click', () => {
+    view = new Date(view.getFullYear(), view.getMonth()+1, 1); renderCalendar();
+  });
+
+  const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/0hUps9Cw34s9hvvO8k0n/webhook-trigger/4962fa5e-1d22-4aee-a9bf-e458aa7f3218';
+
+  document.getElementById('reserva').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!selectedDate || !selectedTime) {
+      alert('Por favor, elige un día y una hora.');
+      return;
+    }
+
+    const nombre = document.getElementById('nombre').value;
+    const personas = document.getElementById('personas').value;
+
+    const payload = {
+      nombre: nombre,
+      email: document.getElementById('email').value,
+      telefono: document.getElementById('tel').value,
+      personas: personas,
+      fecha: selectedDate.toISOString().slice(0, 10),
+      fecha_texto: fmtDate(selectedDate),
+      hora: selectedTime,
+      notas: document.getElementById('notas').value,
+      origen: 'Web Café Aurora · reservas'
+    };
+
+    const submitBtn = document.querySelector('#reserva .btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error('Error al enviar la reserva:', err);
+    }
+
+    document.getElementById('reserva').style.display = 'none';
+    const ok = document.getElementById('ok');
+    document.getElementById('okText').innerHTML =
+      'Gracias, <b>' + nombre + '</b>. Hemos anotado tu reserva para <b>' + personas +
+      '</b> persona(s) el <b>' + fmtDate(selectedDate) + '</b> a las <b>' + selectedTime +
+      '</b>. Te enviaremos la confirmación por email.';
+    ok.classList.add('show');
+    ok.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  renderCalendar(); renderSlots();
+</script>

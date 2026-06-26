@@ -1,0 +1,8 @@
+# Astro
+node_modules/
+dist/
+.astro/
+
+# Sistema
+.DS_Store
+npm-debug.log*

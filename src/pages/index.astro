@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Café Aurora — Página de prueba" active="inicio">
+  <header>
+    <span class="badge">Página de prueba</span>
+    <h1>Café <span>Aurora</span></h1>
+    <p class="sub">Granos de origen, tostado del día y un sitio tranquilo para quedarte un rato. Esto es una web de ejemplo para probar el flujo de publicación.</p>
+    <a href="/reservar" class="btn">Reservar mesa</a>
+  </header>
+
+  <section class="grid">
+    <div class="card">
+      <span class="emoji">☕</span>
+      <h3>Café de especialidad</h3>
+      <p>Tostamos en pequeñas tandas para que cada taza sepa a recién hecho.</p>
+    </div>
+    <div class="card">
+      <span class="emoji">🥐</span>
+      <h3>Repostería casera</h3>
+      <p>Croissants, bizcochos y tartas hechas cada mañana en nuestro obrador.</p>
+    </div>
+    <div class="card">
+      <span class="emoji">🌿</span>
+      <h3>Rincón tranquilo</h3>
+      <p>Wifi, enchufes y luz natural. El sitio perfecto para trabajar o leer.</p>
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    padding: 15px 36px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 14px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    padding: 40px 0 80px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 24px var(--shadow);
+    transition: background 0.3s;
+  }
+  .card .emoji { font-size: 36px; display: block; margin-bottom: 14px; }
+  .card h3 { font-size: 20px; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 15px; }
+</style>
